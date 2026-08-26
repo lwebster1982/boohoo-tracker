@@ -1,0 +1,325 @@
+from playwright.sync_api import sync_playwright
+import pandas as pd
+from datetime import datetime
+import re
+import os
+
+BASE_URL = "https://www.prettylittlething.com/categories/womens-dresses"
+MAX_PAGES = 120
+
+ATTRIBUTE_LABELS = [
+    "Colour:", "Color:", "Style:", "Length:", "Neckline:",
+    "Sleeve Length:", "Occasion:", "Fit:", "Fabric:"
+]
+
+
+def clean_name(text):
+    text = " ".join(text.split())
+
+    for marker in [
+        "Relevance ",
+        "Best Sellers ",
+        "Newness ",
+        "Load More "
+    ]:
+        if text.startswith(marker):
+            text = text[len(marker):]
+
+    positions = []
+
+    for label in ATTRIBUTE_LABELS:
+        pos = text.find(label)
+        if pos != -1:
+            positions.append(pos)
+
+    if positions:
+        text = text[:min(positions)]
+
+    for marker in [
+        "Quick View",
+        "Add to Bag",
+        "Add to bag"
+    ]:
+        if marker in text:
+            text = text.split(marker)[-1]
+
+    return " ".join(text.split()).strip()
+
+
+def extract_page(page, page_number, today):
+    url = f"{BASE_URL}?page={page_number}"
+
+    print(f"\nLoading PLT page {page_number}: {url}")
+
+    page.goto(
+        url,
+        wait_until="domcontentloaded",
+        timeout=120000
+    )
+
+    page.wait_for_timeout(3000)
+
+    page.evaluate(
+        "window.scrollTo(0, document.body.scrollHeight)"
+    )
+
+    page.wait_for_timeout(1500)
+
+    text = " ".join(
+        page.locator("body").inner_text().split()
+    )
+
+    # Handles:
+    # £18.00 £30.00 -40%
+    # or a single full price £30.00
+    price_pattern = re.compile(
+        r"£(\d+(?:\.\d{1,2})?)"
+        r"(?:\s*£(\d+(?:\.\d{1,2})?)\s*-(\d+)%)?"
+    )
+
+    matches = list(price_pattern.finditer(text))
+
+    print(f"Found {len(matches)} price blocks")
+
+    products = []
+    previous_end = 0
+
+    for match in matches:
+        block = text[
+            previous_end:match.start()
+        ].strip()
+
+        if len(block) > 500:
+            block = block[-500:]
+
+        name = clean_name(block)
+
+        current_price = float(match.group(1))
+
+        if match.group(2):
+            original_price = float(match.group(2))
+            discount_pct = int(match.group(3))
+            discounted = True
+        else:
+            original_price = current_price
+            discount_pct = 0
+            discounted = False
+
+        if (
+            name
+            and 5 <= len(name) <= 180
+            and "£" not in name
+            and original_price >= current_price
+            and 0 <= discount_pct <= 100
+        ):
+            products.append({
+                "date": today,
+                "brand": "PLT",
+                "product": name,
+                "current_price": current_price,
+                "original_price": original_price,
+                "discount_pct": discount_pct,
+                "discounted": discounted,
+                "page": page_number
+            })
+
+        previous_end = match.end()
+
+    return products
+
+
+def main():
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    all_products = []
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+
+        page = browser.new_page(
+            viewport={
+                "width": 1440,
+                "height": 1200
+            },
+            user_agent=(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/127.0.0.0 Safari/537.36"
+            )
+        )
+
+        previous_names = None
+
+        for page_number in range(1, MAX_PAGES + 1):
+            try:
+                products = extract_page(
+                    page,
+                    page_number,
+                    today
+                )
+
+            except Exception as e:
+                print(
+                    f"ERROR on page {page_number}: {e}"
+                )
+                break
+
+            if not products:
+                print(
+                    f"No PLT products on page {page_number}. Stopping."
+                )
+                break
+
+            current_names = set(
+                product["product"]
+                for product in products
+            )
+
+            if current_names == previous_names:
+                print(
+                    f"Page {page_number} duplicates previous page."
+                )
+                break
+
+            previous_names = current_names
+
+            all_products.extend(products)
+
+            print(
+                f"Running PLT total: {len(all_products)}"
+            )
+
+        browser.close()
+
+    df = pd.DataFrame(all_products)
+
+    if df.empty:
+        print("NO PLT PRODUCTS CAPTURED")
+        return
+
+    df = df.drop_duplicates(
+        subset=[
+            "product",
+            "current_price",
+            "original_price"
+        ]
+    )
+
+    # -------------------------
+    # LATEST SNAPSHOT
+    # -------------------------
+
+    df.to_csv(
+        "plt_latest.csv",
+        index=False
+    )
+
+    # -------------------------
+    # PRODUCT-LEVEL HISTORY
+    # -------------------------
+
+    if os.path.exists("plt_history.csv"):
+        old = pd.read_csv("plt_history.csv")
+
+        old = old[
+            old["date"].astype(str) != today
+        ]
+
+        history = pd.concat(
+            [old, df],
+            ignore_index=True
+        )
+
+    else:
+        history = df.copy()
+
+    history.to_csv(
+        "plt_history.csv",
+        index=False
+    )
+
+    # -------------------------
+    # DAILY SUMMARY
+    # -------------------------
+
+    discounted = df[
+        df["discounted"] == True
+    ]
+
+    today_summary = pd.DataFrame([{
+        "date": today,
+        "products_captured": len(df),
+        "products_discounted": len(discounted),
+
+        "pct_assortment_discounted":
+            round(
+                len(discounted) / len(df) * 100,
+                1
+            ),
+
+        "average_discount_pct":
+            round(
+                discounted["discount_pct"].mean(),
+                1
+            )
+            if len(discounted) else 0,
+
+        "median_discount_pct":
+            round(
+                discounted["discount_pct"].median(),
+                1
+            )
+            if len(discounted) else 0,
+
+        "discounted_30pct_plus":
+            int(
+                (df["discount_pct"] >= 30).sum()
+            ),
+
+        "discounted_50pct_plus":
+            int(
+                (df["discount_pct"] >= 50).sum()
+            )
+    }])
+
+    # -------------------------
+    # SUMMARY HISTORY
+    # -------------------------
+
+    if os.path.exists("plt_summary.csv"):
+        old_summary = pd.read_csv(
+            "plt_summary.csv"
+        )
+
+        old_summary = old_summary[
+            old_summary["date"].astype(str) != today
+        ]
+
+        summary_history = pd.concat(
+            [old_summary, today_summary],
+            ignore_index=True
+        )
+
+    else:
+        summary_history = today_summary.copy()
+
+    summary_history.to_csv(
+        "plt_summary.csv",
+        index=False
+    )
+
+    print("\n======================")
+    print("PLT DAILY SUMMARY")
+    print("======================")
+
+    print(
+        today_summary.to_string(index=False)
+    )
+
+    print(
+        f"\nTOTAL UNIQUE PLT PRODUCTS: {len(df)}"
+    )
+
+
+if __name__ == "__main__":
+    main()
