@@ -11,21 +11,17 @@ ATTRIBUTE_LABELS = [
     "Neckline:", "Occasion:", "Sleeve length:", "Style:"
 ]
 
-JUNK_PHRASES = [
-    "privacy policy",
-    "let me choose",
-    "reject all",
-    "accept all",
-    "skip to main content",
-    "show more filters",
-    "sort:",
-    "products style size colour",
-]
-
 def clean_name(text):
     text = " ".join(text.split())
 
-    # Cut off product attributes
+    for prefix in [
+        "Relevance ",
+        "Best Sellers ",
+        "Newness "
+    ]:
+        if text.startswith(prefix):
+            text = text[len(prefix):]
+
     positions = []
     for label in ATTRIBUTE_LABELS:
         pos = text.find(label)
@@ -35,12 +31,6 @@ def clean_name(text):
     if positions:
         text = text[:min(positions)]
 
-    # Remove common page junk
-    for junk in JUNK_PHRASES:
-        pos = text.lower().rfind(junk)
-        if pos != -1:
-            text = text[pos + len(junk):]
-
     for marker in ["Quick View", "Add to bag", "Add to Bag"]:
         if marker in text:
             text = text.split(marker)[-1]
@@ -49,17 +39,15 @@ def clean_name(text):
 
 
 def get_brand(name):
-    lower = name.lower()
+    n = name.lower()
 
-    if lower.startswith("plus boohoo"):
+    if "boohoo" in n[:25]:
         return "boohoo"
-    elif lower.startswith("boohoo"):
-        return "boohoo"
-    elif lower.startswith("nastygal"):
+    if n.startswith("nastygal"):
         return "NastyGal"
-    elif lower.startswith("misspap"):
+    if n.startswith("misspap"):
         return "MissPap"
-    elif lower.startswith("debenhams"):
+    if n.startswith("debenhams"):
         return "Debenhams"
 
     return "Other"
@@ -84,27 +72,61 @@ def extract():
         page.goto(URL, wait_until="domcontentloaded", timeout=120000)
         page.wait_for_timeout(5000)
 
-        # Scroll repeatedly to load more catalogue items
-        last_height = 0
+        # Accept/reject cookie banner if it blocks clicks
+        for label in ["REJECT ALL", "ACCEPT ALL"]:
+            try:
+                button = page.get_by_text(label, exact=True)
+                if button.count() > 0:
+                    button.first.click(timeout=3000)
+                    break
+            except:
+                pass
 
-        for _ in range(80):
-            page.mouse.wheel(0, 3500)
-            page.wait_for_timeout(600)
+        # Repeatedly click Boohoo's Load More control
+        clicks = 0
 
-            height = page.evaluate("document.body.scrollHeight")
+        while clicks < 120:
+            try:
+                page.evaluate(
+                    "window.scrollTo(0, document.body.scrollHeight)"
+                )
+                page.wait_for_timeout(1000)
 
-            if height == last_height:
+                load_more = page.get_by_text(
+                    re.compile(r"Load More", re.I)
+                )
+
+                if load_more.count() == 0:
+                    print("No Load More button found.")
+                    break
+
+                button = load_more.last
+
+                if not button.is_visible():
+                    print("Load More no longer visible.")
+                    break
+
+                button.scroll_into_view_if_needed()
+                button.click(timeout=10000)
+
+                clicks += 1
+                page.wait_for_timeout(1500)
+
+                print(f"Clicked Load More {clicks} times")
+
+            except Exception as e:
+                print(f"Stopped loading after {clicks} clicks: {e}")
                 break
 
-            last_height = height
+        print(f"Finished loading after {clicks} Load More clicks")
 
         text = " ".join(page.locator("body").inner_text().split())
 
         browser.close()
 
-    # Matches either:
-    # £15.00 £32.00 -53%
-    # or a single full price such as £49.00
+    # Product prices:
+    # discounted: £15.00 £32.00 -53%
+    # full price: £49.00
 
     price_pattern = re.compile(
         r"£(\d+(?:\.\d{1,2})?)"
@@ -117,9 +139,8 @@ def extract():
     for match in matches:
         block = text[previous_end:match.start()].strip()
 
-        # Avoid dragging huge amounts of navigation text into a name
-        if len(block) > 600:
-            block = block[-600:]
+        if len(block) > 500:
+            block = block[-500:]
 
         name = clean_name(block)
 
@@ -136,10 +157,8 @@ def extract():
 
         if (
             name
-            and len(name) >= 5
-            and len(name) <= 180
+            and 5 <= len(name) <= 180
             and "£" not in name
-            and not any(j in name.lower() for j in JUNK_PHRASES)
             and original_price >= current_price
             and 0 <= discount_pct <= 100
         ):
@@ -162,64 +181,46 @@ def extract():
             subset=["product", "current_price", "original_price"]
         )
 
-    # Save today's clean snapshot
     df.to_csv("latest.csv", index=False)
 
-    # Add today's observations to permanent history
-    history_file = "history.csv"
-
-    if os.path.exists(history_file):
-        old = pd.read_csv(history_file)
-
-        # Prevent duplicate rows if we manually rerun on the same day
+    # Preserve historical snapshots
+    if os.path.exists("history.csv"):
+        old = pd.read_csv("history.csv")
         old = old[old["date"].astype(str) != today]
-
         history = pd.concat([old, df], ignore_index=True)
     else:
         history = df.copy()
 
-    history.to_csv(history_file, index=False)
+    history.to_csv("history.csv", index=False)
 
-    # Produce a simple daily summary
+    # Summary
     if not df.empty:
-        total = len(df)
-        discounted_count = int(df["discounted"].sum())
-        markdown_rate = discounted_count / total * 100
-
-        discounted_df = df[df["discounted"]]
-
-        avg_discount = (
-            discounted_df["discount_pct"].mean()
-            if not discounted_df.empty
-            else 0
-        )
-
-        median_discount = (
-            discounted_df["discount_pct"].median()
-            if not discounted_df.empty
-            else 0
-        )
+        discounted_df = df[df["discounted"] == True]
 
         summary = pd.DataFrame([{
             "date": today,
-            "products_captured": total,
-            "products_discounted": discounted_count,
-            "pct_assortment_discounted": round(markdown_rate, 1),
-            "average_discount_pct": round(avg_discount, 1),
-            "median_discount_pct": round(median_discount, 1),
-            "discounted_30pct_plus": int(
-                (df["discount_pct"] >= 30).sum()
-            ),
-            "discounted_50pct_plus": int(
-                (df["discount_pct"] >= 50).sum()
-            )
+            "products_captured": len(df),
+            "products_discounted": len(discounted_df),
+            "pct_assortment_discounted":
+                round(len(discounted_df) / len(df) * 100, 1),
+            "average_discount_pct":
+                round(discounted_df["discount_pct"].mean(), 1)
+                if len(discounted_df) else 0,
+            "median_discount_pct":
+                round(discounted_df["discount_pct"].median(), 1)
+                if len(discounted_df) else 0,
+            "discounted_30pct_plus":
+                int((df["discount_pct"] >= 30).sum()),
+            "discounted_50pct_plus":
+                int((df["discount_pct"] >= 50).sum())
         }])
 
         summary.to_csv("summary.csv", index=False)
 
+        print("\nDAILY SUMMARY")
         print(summary.to_string(index=False))
 
-    print(f"Captured {len(df)} products")
+    print(f"\nTOTAL PRODUCTS CAPTURED: {len(df)}")
 
 
 if __name__ == "__main__":
