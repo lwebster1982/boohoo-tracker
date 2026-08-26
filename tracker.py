@@ -16,7 +16,6 @@ ATTRIBUTE_LABELS = [
 def clean_name(text):
     text = " ".join(text.split())
 
-    # Remove sorting/navigation text
     for marker in [
         "Relevance ",
         "Best Sellers ",
@@ -26,7 +25,6 @@ def clean_name(text):
         if text.startswith(marker):
             text = text[len(marker):]
 
-    # Remove product attributes
     positions = []
 
     for label in ATTRIBUTE_LABELS:
@@ -60,7 +58,6 @@ def get_brand(name):
 
 
 def extract_page(page, page_number, today):
-
     url = f"{BASE_URL}?page={page_number}"
 
     print(f"\nLoading page {page_number}: {url}")
@@ -73,7 +70,6 @@ def extract_page(page, page_number, today):
 
     page.wait_for_timeout(3000)
 
-    # Scroll once to make sure product cards render
     page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
     page.wait_for_timeout(1500)
 
@@ -94,7 +90,6 @@ def extract_page(page, page_number, today):
     previous_end = 0
 
     for match in matches:
-
         block = text[
             previous_end:match.start()
         ].strip()
@@ -122,7 +117,6 @@ def extract_page(page, page_number, today):
             and original_price >= current_price
             and 0 <= discount_pct <= 100
         ):
-
             products.append({
                 "date": today,
                 "brand": get_brand(name),
@@ -140,13 +134,11 @@ def extract_page(page, page_number, today):
 
 
 def main():
-
     today = datetime.now().strftime("%Y-%m-%d")
 
     all_products = []
 
     with sync_playwright() as p:
-
         browser = p.chromium.launch(headless=True)
 
         page = browser.new_page(
@@ -164,9 +156,7 @@ def main():
         previous_names = None
 
         for page_number in range(1, MAX_PAGES + 1):
-
             try:
-
                 products = extract_page(
                     page,
                     page_number,
@@ -174,19 +164,15 @@ def main():
                 )
 
             except Exception as e:
-
                 print(
                     f"ERROR on page {page_number}: {e}"
                 )
-
                 break
 
             if not products:
-
                 print(
                     f"No products on page {page_number}. Stopping."
                 )
-
                 break
 
             current_names = set(
@@ -194,19 +180,13 @@ def main():
                 for product in products
             )
 
-            # If Boohoo ignores ?page= and keeps returning
-            # the same products, stop rather than creating
-            # thousands of duplicates.
             if current_names == previous_names:
-
                 print(
                     f"Page {page_number} duplicates previous page."
                 )
-
                 print(
                     "Boohoo is ignoring the page parameter."
                 )
-
                 break
 
             previous_names = current_names
@@ -222,11 +202,9 @@ def main():
     df = pd.DataFrame(all_products)
 
     if df.empty:
-
         print("NO PRODUCTS CAPTURED")
         return
 
-    # Remove duplicate products
     df = df.drop_duplicates(
         subset=[
             "product",
@@ -235,20 +213,23 @@ def main():
         ]
     )
 
+    # -------------------------
+    # LATEST SNAPSHOT
+    # -------------------------
+
     df.to_csv(
         "latest.csv",
         index=False
     )
 
     # -------------------------
-    # HISTORICAL DATABASE
+    # PRODUCT-LEVEL HISTORY
     # -------------------------
 
     if os.path.exists("history.csv"):
-
         old = pd.read_csv("history.csv")
 
-        # Replace today's run if we test more than once
+        # Replace today's observations if we rerun today
         old = old[
             old["date"].astype(str) != today
         ]
@@ -259,7 +240,6 @@ def main():
         )
 
     else:
-
         history = df.copy()
 
     history.to_csv(
@@ -275,8 +255,7 @@ def main():
         df["discounted"] == True
     ]
 
-    summary = pd.DataFrame([{
-
+    today_summary = pd.DataFrame([{
         "date": today,
 
         "products_captured":
@@ -287,49 +266,56 @@ def main():
 
         "pct_assortment_discounted":
             round(
-                len(discounted)
-                / len(df)
-                * 100,
+                len(discounted) / len(df) * 100,
                 1
             ),
 
         "average_discount_pct":
             round(
-                discounted[
-                    "discount_pct"
-                ].mean(),
+                discounted["discount_pct"].mean(),
                 1
             )
-            if len(discounted)
-            else 0,
+            if len(discounted) else 0,
 
         "median_discount_pct":
             round(
-                discounted[
-                    "discount_pct"
-                ].median(),
+                discounted["discount_pct"].median(),
                 1
             )
-            if len(discounted)
-            else 0,
+            if len(discounted) else 0,
 
         "discounted_30pct_plus":
             int(
-                (
-                    df["discount_pct"] >= 30
-                ).sum()
+                (df["discount_pct"] >= 30).sum()
             ),
 
         "discounted_50pct_plus":
             int(
-                (
-                    df["discount_pct"] >= 50
-                ).sum()
+                (df["discount_pct"] >= 50).sum()
             )
-
     }])
 
-    summary.to_csv(
+    # -------------------------
+    # SUMMARY HISTORY
+    # -------------------------
+
+    if os.path.exists("summary.csv"):
+        old_summary = pd.read_csv("summary.csv")
+
+        # Replace today's row if we rerun today
+        old_summary = old_summary[
+            old_summary["date"].astype(str) != today
+        ]
+
+        summary_history = pd.concat(
+            [old_summary, today_summary],
+            ignore_index=True
+        )
+
+    else:
+        summary_history = today_summary.copy()
+
+    summary_history.to_csv(
         "summary.csv",
         index=False
     )
@@ -339,7 +325,7 @@ def main():
     print("======================")
 
     print(
-        summary.to_string(index=False)
+        today_summary.to_string(index=False)
     )
 
     print(
