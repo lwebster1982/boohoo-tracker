@@ -1,1 +1,107 @@
-
+date,product,current_price,original_price,discount_pct
+2026-08-26,Style: Wrap Dress,25.2,25.2,0
+2026-08-26,Style: Wrap Dress,36.0,36.0,0
+2026-08-26,Style: Bodycon Dress,14.0,14.0,0
+2026-08-26,Style: Bodycon Dress,32.0,32.0,0
+2026-08-26,Sleeve length: Strappy,15.0,15.0,0
+2026-08-26,Sleeve length: Strappy,32.0,32.0,0
+2026-08-26,Sleeve length: Sleeveless,22.4,22.4,0
+2026-08-26,Sleeve length: Sleeveless,28.0,28.0,0
+2026-08-26,Occasion: Going Out,30.0,30.0,0
+2026-08-26,Occasion: Going Out,60.0,60.0,0
+2026-08-26,Occasion: Going Out,13.0,13.0,0
+2026-08-26,Occasion: Going Out,35.0,35.0,0
+2026-08-26,Sleeve length: Long Sleeve,6.0,6.0,0
+2026-08-26,Sleeve length: Long Sleeve,30.0,30.0,0
+2026-08-26,Occasion: Going Out,9.0,9.0,0
+2026-08-26,Style: Bodycon Dress,18.0,18.0,0
+2026-08-26,Style: Bodycon Dress,35.0,35.0,0
+2026-08-26,Style: Skater Dress,18.0,18.0,0
+2026-08-26,Style: Skater Dress,20.0,20.0,0
+2026-08-26,Style: Skater Dress,25.2,25.2,0
+2026-08-26,Style: Skater Dress,28.0,28.0,0
+2026-08-26,Style: Slip Dress,16.0,16.0,0
+2026-08-26,Style: Slip Dress,28.0,28.0,0
+2026-08-26,Sleeve length: Short Sleeve,26.1,26.1,0
+2026-08-26,Sleeve length: Short Sleeve,29.0,29.0,0
+2026-08-26,Sleeve length: Sleeveless,15.0,15.0,0
+2026-08-26,Sleeve length: Sleeveless,22.0,22.0,0
+2026-08-26,Occasion: Party,20.0,20.0,0
+2026-08-26,Occasion: Party,69.0,69.0,0
+2026-08-26,Style: Shift Dress,33.0,33.0,0
+2026-08-26,Style: Shift Dress,55.0,55.0,0
+2026-08-26,Style: Fit & Flare Dress,10.92,10.92,0
+2026-08-26,Style: Fit & Flare Dress,39.0,39.0,0
+2026-08-26,Sleeve length: Strappy,22.4,22.4,0
+2026-08-26,Sleeve length: Strappy,28.0,28.0,0
+2026-08-26,Occasion: Going Out,25.2,25.2,0
+2026-08-26,Occasion: Going Out,28.0,28.0,0
+2026-08-26,Sleeve length: Strappy,10.0,10.0,0
+2026-08-26,Sleeve length: Strappy,26.0,26.0,0
+2026-08-26,Style: Midi Dress,19.25,19.25,0
+2026-08-26,Style: Midi Dress,55.0,55.0,0
+2026-08-26,Occasion: Going Out,49.0,49.0,0
+2026-08-26,Neckline: V Neck,7.2,7.2,0
+2026-08-26,Neckline: V Neck,30.0,30.0,0
+2026-08-26,Style: Skater Dress,17.6,17.6,0
+2026-08-26,Style: Skater Dress,22.0,22.0,0
+2026-08-26,Style: Dress,16.0,16.0,0
+2026-08-26,Style: Dress,20.0,20.0,0
+2026-08-26,Style: Bodycon Dress,8.0,8.0,0
+2026-08-26,Style: Bodycon Dress,28.0,28.0,0
+2026-08-26,Neckline: V Neck,22.4,22.4,0
+2026-08-26,Neckline: V Neck,28.0,28.0,0
+2026-08-26,Sleeve length: Strappy,22.5,22.5,0
+2026-08-26,Sleeve length: Strappy,25.0,25.0,0
+2026-08-26,Style: Bodycon Dress,9.0,9.0,0
+2026-08-26,Style: Bodycon Dress,20.0,20.0,0
+2026-08-26,Sleeve length: Strappy,34.5,34.5,0
+2026-08-26,Sleeve length: Strappy,69.0,69.0,0
+2026-08-26,Occasion: Going Out,29.0,29.0,0
+2026-08-26,Sleeve length: Strappy,25.2,25.2,0
+2026-08-26,Style: Skater Dress,36.0,36.0,0
+2026-08-26,Occasion: Going Out,53.6,53.6,0
+2026-08-26,Occasion: Going Out,169.0,169.0,0
+2026-08-26,Length: Mini,29.75,29.75,0
+2026-08-26,Length: Mini,35.0,35.0,0
+2026-08-26,Sleeve length: Sleeveless,11.0,11.0,0
+2026-08-26,Sleeve length: Sleeveless,34.0,34.0,0
+2026-08-26,Style: Slip Dress,19.8,19.8,0
+2026-08-26,Style: Slip Dress,22.0,22.0,0
+2026-08-26,Style: Skater Dress,22.4,22.4,0
+2026-08-26,Sleeve length: Long Sleeve,23.4,23.4,0
+2026-08-26,Sleeve length: Long Sleeve,26.0,26.0,0
+2026-08-26,Occasion: Going Out,25.5,25.5,0
+2026-08-26,Sleeve length: Strappy,21.25,21.25,0
+2026-08-26,Sleeve length: Sleeveless,12.0,12.0,0
+2026-08-26,Sleeve length: Sleeveless,26.0,26.0,0
+2026-08-26,Sleeve length: Sleeveless,36.0,36.0,0
+2026-08-26,Sleeve length: Sleeveless,45.0,45.0,0
+2026-08-26,Style: Bridesmaid Dress,23.0,23.0,0
+2026-08-26,Style: Bridesmaid Dress,70.0,70.0,0
+2026-08-26,Style: Smock Dress,21.25,21.25,0
+2026-08-26,Style: Smock Dress,25.0,25.0,0
+2026-08-26,Sleeve length: Strappy,27.0,27.0,0
+2026-08-26,Sleeve length: Strappy,30.0,30.0,0
+2026-08-26,Style: Skater Dress,39.0,39.0,0
+2026-08-26,Occasion: Going Out,9.9,9.9,0
+2026-08-26,Occasion: Occasion,36.0,36.0,0
+2026-08-26,Occasion: Occasion,45.0,45.0,0
+2026-08-26,Occasion: Going Out,10.0,10.0,0
+2026-08-26,Occasion: Going Out,32.0,32.0,0
+2026-08-26,Style: Skater Dress,17.0,17.0,0
+2026-08-26,Style: Skater Dress,32.0,32.0,0
+2026-08-26,Style: Fit & Flare Dress,23.4,23.4,0
+2026-08-26,Style: Fit & Flare Dress,26.0,26.0,0
+2026-08-26,Style: Skater Dress,30.0,30.0,0
+2026-08-26,Style: Shift Dress,23.8,23.8,0
+2026-08-26,Style: Shift Dress,28.0,28.0,0
+2026-08-26,Sleeve length: Long Sleeve,18.0,18.0,0
+2026-08-26,Sleeve length: Long Sleeve,35.0,35.0,0
+2026-08-26,Style: Skater Dress,16.0,16.0,0
+2026-08-26,Style: Slip Dress,23.0,23.0,0
+2026-08-26,Style: Slip Dress,46.0,46.0,0
+2026-08-26,Neckline: Bardot,9.0,9.0,0
+2026-08-26,Neckline: Bardot,22.0,22.0,0
+2026-08-26,Style: Shift Dress,23.2,23.2,0
+2026-08-26,Style: Shift Dress,29.0,29.0,0
