@@ -28,8 +28,6 @@ def get_google_trends():
         hl="en-GB",
         tz=0,
         timeout=(10, 30),
-        retries=2,
-        backoff_factor=0.5,
     )
 
     # Last 7 days gives hourly/recent data and provides
