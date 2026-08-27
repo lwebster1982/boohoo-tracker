@@ -1,4 +1,4 @@
-name: Daily Boohoo Tracker
+name: Daily Retail Tracker
 
 on:
   schedule:
@@ -38,7 +38,7 @@ jobs:
       - name: Run BoohooMAN tracker
         run: python boohooman.py
 
-      - name: Track Google Trends
+      - name: Run Google Trends tracker
         run: python trends.py
 
       - name: Save results
@@ -46,5 +46,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git diff --staged --quiet || git commit -m "Update daily Boohoo tracker"
+          git diff --staged --quiet || git commit -m "Update daily retail tracker"
           git push
