@@ -3,7 +3,8 @@ name: Daily Retail Discount Tracker
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 7 * * *"
+    - cron: "17 8 * * *"
+      timezone: "Europe/London"
 
 permissions:
   contents: write
