@@ -8,6 +8,33 @@ README_FILE = Path("README.md")
 
 
 # ============================================================
+# DISPLAY NAMES
+# ============================================================
+
+TREND_NAMES = {
+    "asos": "ASOS",
+    "boohoo": "Boohoo",
+    "plt": "PrettyLittleThing",
+    "boohooman": "BoohooMAN",
+    "karen_millen": "Karen Millen",
+    "next": "Next",
+    "zara": "Zara",
+    "hm": "H&M",
+    "river_island": "River Island",
+    "new_look": "New Look",
+    "mango": "Mango",
+    "marks_spencer": "M&S",
+}
+
+FOCUS_TRENDS = [
+    "boohoo",
+    "plt",
+    "boohooman",
+    "karen_millen",
+]
+
+
+# ============================================================
 # HELPERS
 # ============================================================
 
@@ -25,7 +52,10 @@ def read_csv_safe(filename):
 
         return df
 
-    except Exception:
+    except Exception as error:
+        print(
+            f"Could not read {filename}: {error}"
+        )
         return None
 
 
@@ -48,27 +78,34 @@ def previous_row(filename):
 
 
 def fmt_number(value, decimals=1):
-    if pd.isna(value):
+    if value is None or pd.isna(value):
         return "—"
 
     return f"{float(value):,.{decimals}f}"
 
 
 def fmt_int(value):
-    if pd.isna(value):
+    if value is None or pd.isna(value):
         return "—"
 
     return f"{int(round(float(value))):,}"
 
 
-def change_text(current, previous, suffix=""):
+def change_text(current, previous, suffix="pp"):
     if previous is None:
         return ""
 
-    if pd.isna(current) or pd.isna(previous):
+    if (
+        current is None
+        or pd.isna(current)
+        or pd.isna(previous)
+    ):
         return ""
 
-    change = float(current) - float(previous)
+    change = (
+        float(current)
+        - float(previous)
+    )
 
     if abs(change) < 0.05:
         return "→ unchanged"
@@ -77,66 +114,28 @@ def change_text(current, previous, suffix=""):
 
     return (
         f"{arrow} "
-        f"{abs(change):.1f}{suffix} vs previous day"
-    )
-
-
-def pct_change_text(current, previous):
-    if previous is None:
-        return ""
-
-    if (
-        pd.isna(current)
-        or pd.isna(previous)
-        or float(previous) == 0
-    ):
-        return ""
-
-    change = (
-        float(current) / float(previous) - 1
-    ) * 100
-
-    if abs(change) < 0.1:
-        return "→ unchanged"
-
-    arrow = "↑" if change > 0 else "↓"
-
-    return (
-        f"{arrow} "
-        f"{abs(change):.1f}% vs previous day"
+        f"{abs(change):.1f}{suffix}"
     )
 
 
 # ============================================================
-# RETAIL DISCOUNT SECTION
+# DISCOUNTING
 # ============================================================
 
 def brand_discount_block(
     display_name,
     summary_file
 ):
-    latest = latest_row(summary_file)
-    previous = previous_row(summary_file)
+    latest = latest_row(
+        summary_file
+    )
+
+    previous = previous_row(
+        summary_file
+    )
 
     if latest is None:
         return []
-
-    prev_discounted = None
-    prev_avg = None
-    prev_median = None
-
-    if previous is not None:
-        prev_discounted = previous.get(
-            "pct_assortment_discounted"
-        )
-
-        prev_avg = previous.get(
-            "average_discount_pct"
-        )
-
-        prev_median = previous.get(
-            "median_discount_pct"
-        )
 
     lines = []
 
@@ -146,9 +145,13 @@ def brand_discount_block(
 
     lines.append("")
 
+    products = latest.get(
+        "products_captured"
+    )
+
     lines.append(
         f"**Assortment:** "
-        f"{fmt_int(latest.get('products_captured'))} products"
+        f"{fmt_int(products)} products"
     )
 
     lines.append("")
@@ -157,63 +160,99 @@ def brand_discount_block(
         "pct_assortment_discounted"
     )
 
-    movement = change_text(
-        markdown_rate,
-        prev_discounted,
-        "pp"
+    previous_markdown = (
+        previous.get(
+            "pct_assortment_discounted"
+        )
+        if previous is not None
+        else None
     )
 
-    line = (
+    movement = change_text(
+        markdown_rate,
+        previous_markdown
+    )
+
+    markdown_line = (
         f"**On markdown:** "
         f"{fmt_number(markdown_rate)}%"
     )
 
     if movement:
-        line += f" · {movement}"
+        markdown_line += (
+            f" · {movement} vs prior day"
+        )
 
-    lines.append(line)
+    lines.append(
+        markdown_line
+    )
+
     lines.append("")
 
-    avg_discount = latest.get(
+    average = latest.get(
         "average_discount_pct"
     )
 
-    avg_move = change_text(
-        avg_discount,
-        prev_avg,
-        "pp"
+    previous_average = (
+        previous.get(
+            "average_discount_pct"
+        )
+        if previous is not None
+        else None
     )
 
-    line = (
+    movement = change_text(
+        average,
+        previous_average
+    )
+
+    average_line = (
         f"**Average markdown:** "
-        f"{fmt_number(avg_discount)}%"
+        f"{fmt_number(average)}%"
     )
 
-    if avg_move:
-        line += f" · {avg_move}"
+    if movement:
+        average_line += (
+            f" · {movement} vs prior day"
+        )
 
-    lines.append(line)
+    lines.append(
+        average_line
+    )
+
     lines.append("")
 
-    median_discount = latest.get(
+    median = latest.get(
         "median_discount_pct"
     )
 
-    median_move = change_text(
-        median_discount,
-        prev_median,
-        "pp"
+    previous_median = (
+        previous.get(
+            "median_discount_pct"
+        )
+        if previous is not None
+        else None
     )
 
-    line = (
+    movement = change_text(
+        median,
+        previous_median
+    )
+
+    median_line = (
         f"**Median markdown:** "
-        f"{fmt_number(median_discount)}%"
+        f"{fmt_number(median)}%"
     )
 
-    if median_move:
-        line += f" · {median_move}"
+    if movement:
+        median_line += (
+            f" · {movement} vs prior day"
+        )
 
-    lines.append(line)
+    lines.append(
+        median_line
+    )
+
     lines.append("")
 
     lines.append(
@@ -230,187 +269,10 @@ def brand_discount_block(
 
 
 # ============================================================
-# GOOGLE TRENDS SECTION
+# MATERIAL DAILY CHANGES
 # ============================================================
 
-TREND_NAMES = {
-    "asos": "ASOS",
-    "boohoo": "Boohoo",
-    "plt": "PrettyLittleThing",
-    "boohooman": "BoohooMAN",
-    "karen_millen": "Karen Millen",
-    "next": "Next",
-    "zara": "Zara",
-    "hm": "H&M",
-    "river_island": "River Island",
-    "new_look": "New Look",
-    "mango": "Mango",
-    "marks_spencer": "M&S",
-}
-
-
-def trends_market_block():
-    df = read_csv_safe(
-        "trends_market.csv"
-    )
-
-    if df is None:
-        return []
-
-    latest = df.iloc[-1]
-
-    rows = []
-
-    for column in df.columns:
-
-        if column == "date":
-            continue
-
-        value = latest.get(column)
-
-        if pd.isna(value):
-            continue
-
-        rows.append(
-            (
-                TREND_NAMES.get(
-                    column,
-                    column
-                ),
-                float(value)
-            )
-        )
-
-    rows.sort(
-        key=lambda x: x[1],
-        reverse=True
-    )
-
-    lines = []
-
-    lines.append(
-        "## 🔎 UK Search Popularity"
-    )
-
-    lines.append("")
-
-    lines.append(
-        "_Relative Google search interest, "
-        "normalised to ASOS = 100._"
-    )
-
-    lines.append("")
-
-    for name, value in rows:
-
-        lines.append(
-            f"**{name}: {value:.1f}**"
-        )
-
-        lines.append("")
-
-    return lines
-
-
-def trends_momentum_block():
-    df = read_csv_safe(
-        "trends_momentum.csv"
-    )
-
-    if df is None:
-        return []
-
-    useful = []
-
-    for _, row in df.iterrows():
-
-        brand = row.get("brand")
-
-        if brand not in TREND_NAMES:
-            continue
-
-        change_7d = row.get(
-            "change_7d_pct"
-        )
-
-        change_30d = row.get(
-            "change_30d_pct"
-        )
-
-        if (
-            pd.isna(change_7d)
-            and pd.isna(change_30d)
-        ):
-            continue
-
-        useful.append(
-            (
-                TREND_NAMES[brand],
-                change_7d,
-                change_30d
-            )
-        )
-
-    if not useful:
-        return []
-
-    lines = []
-
-    lines.append(
-        "## 📈 Search Momentum"
-    )
-
-    lines.append("")
-
-    for name, change_7d, change_30d in useful:
-
-        parts = []
-
-        if not pd.isna(change_7d):
-
-            arrow = (
-                "↑"
-                if change_7d > 0
-                else "↓"
-                if change_7d < 0
-                else "→"
-            )
-
-            parts.append(
-                f"7d {arrow} "
-                f"{abs(change_7d):.1f}%"
-            )
-
-        if not pd.isna(change_30d):
-
-            arrow = (
-                "↑"
-                if change_30d > 0
-                else "↓"
-                if change_30d < 0
-                else "→"
-            )
-
-            parts.append(
-                f"30d {arrow} "
-                f"{abs(change_30d):.1f}%"
-            )
-
-        lines.append(
-            f"**{name}** · "
-            + " · ".join(parts)
-        )
-
-        lines.append("")
-
-    return lines
-
-
-# ============================================================
-# KEY DAILY SIGNALS
-# ============================================================
-
-def build_signals():
+def build_discount_signals():
     signals = []
 
     brands = [
@@ -430,10 +292,18 @@ def build_signals():
 
     for brand, filename in brands:
 
-        latest = latest_row(filename)
-        previous = previous_row(filename)
+        latest = latest_row(
+            filename
+        )
 
-        if latest is None or previous is None:
+        previous = previous_row(
+            filename
+        )
+
+        if (
+            latest is None
+            or previous is None
+        ):
             continue
 
         markdown_change = (
@@ -477,9 +347,9 @@ def build_signals():
             )
 
             signals.append(
-                f"**{brand}:** markdown breadth "
-                f"{direction} by "
-                f"{abs(markdown_change):.1f}pp."
+                f"**{brand}:** "
+                f"markdown breadth {direction} "
+                f"by {abs(markdown_change):.1f}pp."
             )
 
         if abs(median_change) >= 5:
@@ -491,52 +361,276 @@ def build_signals():
             )
 
             signals.append(
-                f"**{brand}:** median markdown "
-                f"{direction} by "
-                f"{abs(median_change):.1f}pp."
+                f"**{brand}:** "
+                f"median markdown {direction} "
+                f"by {abs(median_change):.1f}pp."
             )
 
-    # Trends signals
+    return signals
 
-    trends = read_csv_safe(
+
+# ============================================================
+# GOOGLE TRENDS MARKET POPULARITY
+# ============================================================
+
+def trends_market_block():
+    df = read_csv_safe(
+        "trends_market.csv"
+    )
+
+    if df is None:
+        return []
+
+    latest = df.iloc[-1]
+
+    rows = []
+
+    for column in df.columns:
+
+        if column == "date":
+            continue
+
+        value = latest.get(
+            column
+        )
+
+        if pd.isna(value):
+            continue
+
+        rows.append(
+            (
+                TREND_NAMES.get(
+                    column,
+                    column
+                ),
+                float(value)
+            )
+        )
+
+    rows.sort(
+        key=lambda item: item[1],
+        reverse=True
+    )
+
+    lines = []
+
+    lines.append(
+        "## 🔎 UK Search Popularity"
+    )
+
+    lines.append("")
+
+    lines.append(
+        "_Trailing 30-day Google search "
+        "interest, normalised to ASOS = 100._"
+    )
+
+    lines.append("")
+
+    lines.append(
+        "| Brand | Search index |"
+    )
+
+    lines.append(
+        "|---|---:|"
+    )
+
+    for name, value in rows:
+
+        lines.append(
+            f"| **{name}** | {value:.1f} |"
+        )
+
+    lines.append("")
+
+    return lines
+
+
+# ============================================================
+# GOOGLE TRENDS MOMENTUM
+# ============================================================
+
+def trends_momentum_block():
+    df = read_csv_safe(
         "trends_momentum.csv"
     )
 
-    if trends is not None:
+    if df is None:
+        return []
 
-        for _, row in trends.iterrows():
+    lines = []
 
-            brand = row.get("brand")
+    lines.append(
+        "## 📈 Brand Search Momentum"
+    )
 
-            if brand not in [
-                "boohoo",
-                "plt",
-                "boohooman",
-                "karen_millen",
-            ]:
-                continue
+    lines.append("")
 
-            change = row.get(
-                "change_7d_pct"
+    lines.append(
+        "_Momentum is shown only for "
+        "Boohoo, PLT, BoohooMAN and Karen Millen._"
+    )
+
+    lines.append("")
+
+    found_any = False
+
+    for brand in FOCUS_TRENDS:
+
+        match = df[
+            df["brand"] == brand
+        ]
+
+        if match.empty:
+            continue
+
+        row = match.iloc[0]
+
+        name = TREND_NAMES[
+            brand
+        ]
+
+        popularity = row.get(
+            "popularity_index"
+        )
+
+        change_7d = row.get(
+            "change_7d_pct"
+        )
+
+        change_30d = row.get(
+            "change_30d_pct"
+        )
+
+        lines.append(
+            f"### {name}"
+        )
+
+        lines.append("")
+
+        lines.append(
+            f"**Current search index:** "
+            f"{fmt_number(popularity)}"
+        )
+
+        lines.append("")
+
+        if pd.isna(change_7d):
+
+            lines.append(
+                "**7-day momentum:** "
+                "Not enough history yet"
             )
 
-            if pd.isna(change):
-                continue
+        else:
 
-            if abs(float(change)) >= 10:
+            arrow = (
+                "↑"
+                if change_7d > 0
+                else "↓"
+                if change_7d < 0
+                else "→"
+            )
 
-                arrow = (
-                    "increased"
-                    if change > 0
-                    else "decreased"
-                )
+            lines.append(
+                f"**7-day momentum:** "
+                f"{arrow} "
+                f"{abs(float(change_7d)):.1f}%"
+            )
 
-                signals.append(
-                    f"**{TREND_NAMES[brand]}:** "
-                    f"7-day search interest "
-                    f"{arrow} "
-                    f"{abs(float(change)):.1f}%."
-                )
+        lines.append("")
+
+        if pd.isna(change_30d):
+
+            lines.append(
+                "**30-day momentum:** "
+                "Not enough history yet"
+            )
+
+        else:
+
+            arrow = (
+                "↑"
+                if change_30d > 0
+                else "↓"
+                if change_30d < 0
+                else "→"
+            )
+
+            lines.append(
+                f"**30-day momentum:** "
+                f"{arrow} "
+                f"{abs(float(change_30d)):.1f}%"
+            )
+
+        lines.append("")
+
+        found_any = True
+
+    if not found_any:
+
+        lines.append(
+            "Not enough trend history yet."
+        )
+
+        lines.append("")
+
+    return lines
+
+
+# ============================================================
+# TREND ALERTS
+# ============================================================
+
+def build_trend_signals():
+    signals = []
+
+    df = read_csv_safe(
+        "trends_momentum.csv"
+    )
+
+    if df is None:
+        return signals
+
+    for brand in FOCUS_TRENDS:
+
+        match = df[
+            df["brand"] == brand
+        ]
+
+        if match.empty:
+            continue
+
+        row = match.iloc[0]
+
+        change = row.get(
+            "change_7d_pct"
+        )
+
+        if pd.isna(change):
+            continue
+
+        change = float(
+            change
+        )
+
+        # Only flag genuinely noticeable
+        # short-term movements.
+
+        if abs(change) >= 10:
+
+            direction = (
+                "increased"
+                if change > 0
+                else "decreased"
+            )
+
+            signals.append(
+                f"**{TREND_NAMES[brand]}:** "
+                f"7-day search interest "
+                f"{direction} by "
+                f"{abs(change):.1f}%."
+            )
 
     return signals
 
@@ -566,21 +660,26 @@ def main():
     lines.append("")
 
     lines.append(
-        "_Daily read-through on promotional intensity "
-        "and consumer search interest._"
+        "_Daily read-through on promotional "
+        "intensity and UK consumer search interest._"
     )
 
-    # --------------------------------------------------------
-    # IMPORTANT CHANGES
-    # --------------------------------------------------------
+    # ========================================================
+    # CHANGES WORTH NOTICING
+    # ========================================================
 
-    signals = build_signals()
+    signals = (
+        build_discount_signals()
+        +
+        build_trend_signals()
+    )
 
     if signals:
 
         lines.append("")
         lines.append("---")
         lines.append("")
+
         lines.append(
             "## 🚨 Changes Worth Noticing"
         )
@@ -588,17 +687,19 @@ def main():
         lines.append("")
 
         for signal in signals:
+
             lines.append(
                 f"- {signal}"
             )
 
-    # --------------------------------------------------------
-    # DISCOUNTING
-    # --------------------------------------------------------
+    # ========================================================
+    # PROMOTIONAL INTENSITY
+    # ========================================================
 
     lines.append("")
     lines.append("---")
     lines.append("")
+
     lines.append(
         "## 🏷️ Promotional Intensity"
     )
@@ -627,9 +728,9 @@ def main():
             )
         )
 
-    # --------------------------------------------------------
-    # TRENDS
-    # --------------------------------------------------------
+    # ========================================================
+    # SEARCH POPULARITY
+    # ========================================================
 
     lines.append("---")
     lines.append("")
@@ -638,43 +739,44 @@ def main():
         trends_market_block()
     )
 
-    momentum = trends_momentum_block()
+    # ========================================================
+    # SEARCH MOMENTUM
+    # ========================================================
 
-    if momentum:
+    lines.append("---")
+    lines.append("")
 
-        lines.append("---")
-        lines.append("")
-        lines.extend(
-            momentum
-        )
+    lines.extend(
+        trends_momentum_block()
+    )
 
-    # --------------------------------------------------------
-    # LINKS TO RAW DATA
-    # --------------------------------------------------------
+    # ========================================================
+    # RAW DATA
+    # ========================================================
 
     lines.append("---")
     lines.append("")
 
     lines.append(
-        "## 📂 Data"
+        "## 📂 Raw Data"
     )
 
     lines.append("")
 
     lines.append(
-        "- [Boohoo daily summary](summary.csv)"
+        "- [Boohoo summary](summary.csv)"
     )
 
     lines.append(
-        "- [PLT daily summary](plt_summary.csv)"
+        "- [PLT summary](plt_summary.csv)"
     )
 
     lines.append(
-        "- [BoohooMAN daily summary](boohooman_summary.csv)"
+        "- [BoohooMAN summary](boohooman_summary.csv)"
     )
 
     lines.append(
-        "- [Search popularity](trends_market.csv)"
+        "- [UK search popularity](trends_market.csv)"
     )
 
     lines.append(
@@ -682,6 +784,7 @@ def main():
     )
 
     lines.append("")
+
     lines.append(
         "_Updated automatically by GitHub Actions._"
     )
