@@ -31,11 +31,17 @@ jobs:
       - name: Run PLT tracker
         run: python plt.py
 
+      - name: Run BoohooMAN tracker
+        run: python boohooman.py
+
       - name: Save results
         run: |
           git config user.name "Retail Tracker"
           git config user.email "actions@github.com"
+
           git add latest.csv history.csv summary.csv
           git add plt_latest.csv plt_history.csv plt_summary.csv
+          git add boohooman_latest.csv boohooman_history.csv boohooman_summary.csv
+
           git diff --cached --quiet || git commit -m "Daily retail snapshot"
           git push
