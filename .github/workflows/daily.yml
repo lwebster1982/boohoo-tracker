@@ -2,10 +2,9 @@ name: Daily Boohoo Tracker
 
 on:
   schedule:
-    # 08:00 UTC = 09:00 UK time during BST
-    - cron: "0 8 * * *"
+    - cron: "14 7 * * *"
+      timezone: "Europe/London"
 
-  # Allows you to run it manually from the Actions tab
   workflow_dispatch:
 
 permissions:
