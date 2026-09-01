@@ -1,15 +1,8 @@
 # Retail Trading Monitor
 
-**31 August 2026**
+**01 September 2026**
 
 _Daily read-through on promotional intensity and UK consumer search interest._
-
----
-
-## 🚨 Changes Worth Noticing
-
-- **Boohoo:** median markdown eased by 5.0pp.
-- **BoohooMAN:** markdown breadth decreased by 3.9pp.
 
 ---
 
@@ -17,39 +10,39 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ### Boohoo
 
-**Assortment:** 1,899 products
+**Assortment:** 1,905 products
 
-**On markdown:** 94.3% · ↓ 1.5pp vs prior day
+**On markdown:** 92.7% · ↓ 1.6pp vs prior day
 
-**Average markdown:** 30.1% · ↑ 0.5pp vs prior day
-
-**Median markdown:** 20.0% · ↓ 5.0pp vs prior day
-
-**≥30% off:** 758 · **≥50% off:** 434
-
-### PrettyLittleThing
-
-**Assortment:** 8,814 products
-
-**On markdown:** 93.7% · → unchanged vs prior day
-
-**Average markdown:** 43.3% · ↑ 0.1pp vs prior day
-
-**Median markdown:** 41.0% · → unchanged vs prior day
-
-**≥30% off:** 6,602 · **≥50% off:** 3,701
-
-### BoohooMAN
-
-**Assortment:** 1,624 products
-
-**On markdown:** 90.0% · ↓ 3.9pp vs prior day
-
-**Average markdown:** 22.1% · ↑ 1.2pp vs prior day
+**Average markdown:** 30.1% · → unchanged vs prior day
 
 **Median markdown:** 20.0% · → unchanged vs prior day
 
-**≥30% off:** 90 · **≥50% off:** 58
+**≥30% off:** 736 · **≥50% off:** 438
+
+### PrettyLittleThing
+
+**Assortment:** 8,806 products
+
+**On markdown:** 93.3% · ↓ 0.4pp vs prior day
+
+**Average markdown:** 43.4% · ↑ 0.1pp vs prior day
+
+**Median markdown:** 43.0% · ↑ 2.0pp vs prior day
+
+**≥30% off:** 6,559 · **≥50% off:** 3,727
+
+### BoohooMAN
+
+**Assortment:** 1,616 products
+
+**On markdown:** 91.5% · ↑ 1.5pp vs prior day
+
+**Average markdown:** 23.7% · ↑ 1.6pp vs prior day
+
+**Median markdown:** 20.0% · → unchanged vs prior day
+
+**≥30% off:** 179 · **≥50% off:** 149
 
 ---
 
