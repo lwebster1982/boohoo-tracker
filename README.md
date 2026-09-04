@@ -1,6 +1,6 @@
 # Retail Trading Monitor
 
-**03 September 2026**
+**04 September 2026**
 
 _Daily read-through on promotional intensity and UK consumer search interest._
 
@@ -8,9 +8,8 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ## 🚨 Changes Worth Noticing
 
-- **Boohoo:** median markdown deepened by 5.0pp.
-- **PrettyLittleThing:** median markdown eased by 9.0pp.
-- **BoohooMAN:** markdown breadth increased by 3.6pp.
+- **Boohoo:** markdown breadth decreased by 3.9pp.
+- **Boohoo:** median markdown eased by 5.0pp.
 
 ---
 
@@ -18,39 +17,39 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ### Boohoo
 
-**Assortment:** 1,896 products
+**Assortment:** 1,908 products
 
-**On markdown:** 95.7% · ↓ 0.3pp vs prior day
+**On markdown:** 91.8% · ↓ 3.9pp vs prior day
 
-**Average markdown:** 31.0% · ↑ 1.9pp vs prior day
+**Average markdown:** 29.1% · ↓ 1.9pp vs prior day
 
-**Median markdown:** 25.0% · ↑ 5.0pp vs prior day
+**Median markdown:** 20.0% · ↓ 5.0pp vs prior day
 
-**≥30% off:** 665 · **≥50% off:** 487
+**≥30% off:** 580 · **≥50% off:** 389
 
 ### PrettyLittleThing
 
-**Assortment:** 8,246 products
+**Assortment:** 9,028 products
 
-**On markdown:** 94.0% · ↓ 0.1pp vs prior day
+**On markdown:** 95.3% · ↑ 1.3pp vs prior day
 
-**Average markdown:** 40.9% · ↓ 1.6pp vs prior day
+**Average markdown:** 40.4% · ↓ 0.5pp vs prior day
 
-**Median markdown:** 33.0% · ↓ 9.0pp vs prior day
+**Median markdown:** 30.0% · ↓ 3.0pp vs prior day
 
-**≥30% off:** 4,433 · **≥50% off:** 3,219
+**≥30% off:** 4,871 · **≥50% off:** 3,315
 
 ### BoohooMAN
 
-**Assortment:** 1,656 products
+**Assortment:** 1,652 products
 
-**On markdown:** 89.3% · ↑ 3.6pp vs prior day
+**On markdown:** 88.1% · ↓ 1.2pp vs prior day
 
-**Average markdown:** 21.9% · ↓ 0.4pp vs prior day
+**Average markdown:** 22.1% · ↑ 0.2pp vs prior day
 
 **Median markdown:** 20.0% · → unchanged vs prior day
 
-**≥30% off:** 93 · **≥50% off:** 48
+**≥30% off:** 104 · **≥50% off:** 61
 
 ---
 
