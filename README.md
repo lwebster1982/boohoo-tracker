@@ -1,6 +1,6 @@
 # Retail Trading Monitor
 
-**07 October 2026**
+**08 October 2026**
 
 _Daily read-through on promotional intensity and UK consumer search interest._
 
@@ -8,9 +8,9 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ## 🚨 Changes Worth Noticing
 
-- **Boohoo:** median markdown eased by 20.0pp.
-- **PrettyLittleThing:** markdown breadth increased by 2.3pp.
-- **BoohooMAN:** markdown breadth increased by 8.9pp.
+- **PrettyLittleThing:** markdown breadth increased by 2.5pp.
+- **BoohooMAN:** markdown breadth increased by 6.0pp.
+- **BoohooMAN:** median markdown eased by 5.0pp.
 - **Boohoo:** 7-day search interest decreased by 12.4%.
 - **PrettyLittleThing:** 7-day search interest decreased by 72.0%.
 - **Karen Millen:** 7-day search interest decreased by 11.3%.
@@ -21,39 +21,39 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ### Boohoo
 
-**Assortment:** 1,833 products
+**Assortment:** 1,788 products
 
-**On markdown:** 97.3% · ↓ 0.4pp vs prior day
+**On markdown:** 97.9% · ↑ 0.6pp vs prior day
 
-**Average markdown:** 26.1% · ↓ 13.4pp vs prior day
+**Average markdown:** 29.4% · ↑ 3.3pp vs prior day
 
-**Median markdown:** 20.0% · ↓ 20.0pp vs prior day
+**Median markdown:** 20.0% · → unchanged vs prior day
 
-**≥30% off:** 363 · **≥50% off:** 276
+**≥30% off:** 461 · **≥50% off:** 333
 
 ### PrettyLittleThing
 
-**Assortment:** 8,008 products
+**Assortment:** 8,581 products
 
-**On markdown:** 96.3% · ↑ 2.3pp vs prior day
+**On markdown:** 98.8% · ↑ 2.5pp vs prior day
 
-**Average markdown:** 42.9% · ↓ 1.0pp vs prior day
+**Average markdown:** 42.3% · ↓ 0.6pp vs prior day
 
-**Median markdown:** 49.0% · → unchanged vs prior day
+**Median markdown:** 45.0% · ↓ 4.0pp vs prior day
 
-**≥30% off:** 4,916 · **≥50% off:** 3,833
+**≥30% off:** 5,126 · **≥50% off:** 4,114
 
 ### BoohooMAN
 
-**Assortment:** 1,676 products
+**Assortment:** 1,507 products
 
-**On markdown:** 93.3% · ↑ 8.9pp vs prior day
+**On markdown:** 99.3% · ↑ 6.0pp vs prior day
 
-**Average markdown:** 30.1% · ↓ 2.8pp vs prior day
+**Average markdown:** 20.1% · ↓ 10.0pp vs prior day
 
-**Median markdown:** 25.0% · → unchanged vs prior day
+**Median markdown:** 20.0% · ↓ 5.0pp vs prior day
 
-**≥30% off:** 478 · **≥50% off:** 57
+**≥30% off:** 4 · **≥50% off:** 0
 
 ---
 
