@@ -1,6 +1,6 @@
 # Retail Trading Monitor
 
-**18 October 2026**
+**19 October 2026**
 
 _Daily read-through on promotional intensity and UK consumer search interest._
 
@@ -8,9 +8,10 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ## 🚨 Changes Worth Noticing
 
-- **Boohoo:** median markdown eased by 5.0pp.
-- **BoohooMAN:** median markdown eased by 10.0pp.
-- **PrettyLittleThing:** 7-day search interest increased by 25.0%.
+- **Boohoo:** markdown breadth decreased by 4.8pp.
+- **Boohoo:** median markdown deepened by 10.0pp.
+- **PrettyLittleThing:** markdown breadth decreased by 3.8pp.
+- **PrettyLittleThing:** 7-day search interest decreased by 57.1%.
 
 ---
 
@@ -18,39 +19,39 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ### Boohoo
 
-**Assortment:** 1,907 products
+**Assortment:** 1,904 products
 
-**On markdown:** 99.5% · ↑ 0.1pp vs prior day
+**On markdown:** 94.7% · ↓ 4.8pp vs prior day
 
-**Average markdown:** 26.6% · ↓ 2.2pp vs prior day
+**Average markdown:** 31.5% · ↑ 4.9pp vs prior day
 
-**Median markdown:** 15.0% · ↓ 5.0pp vs prior day
+**Median markdown:** 25.0% · ↑ 10.0pp vs prior day
 
-**≥30% off:** 556 · **≥50% off:** 405
+**≥30% off:** 582 · **≥50% off:** 445
 
 ### PrettyLittleThing
 
-**Assortment:** 8,718 products
+**Assortment:** 8,740 products
 
-**On markdown:** 98.1% · → unchanged vs prior day
+**On markdown:** 94.3% · ↓ 3.8pp vs prior day
 
-**Average markdown:** 42.1% · ↓ 0.5pp vs prior day
+**Average markdown:** 42.9% · ↑ 0.8pp vs prior day
 
-**Median markdown:** 45.0% · ↓ 2.0pp vs prior day
+**Median markdown:** 47.0% · ↑ 2.0pp vs prior day
 
-**≥30% off:** 5,244 · **≥50% off:** 4,150
+**≥30% off:** 5,187 · **≥50% off:** 4,060
 
 ### BoohooMAN
 
-**Assortment:** 1,524 products
+**Assortment:** 1,705 products
 
-**On markdown:** 99.6% · ↓ 0.3pp vs prior day
+**On markdown:** 98.5% · ↓ 1.1pp vs prior day
 
-**Average markdown:** 20.8% · ↓ 9.2pp vs prior day
+**Average markdown:** 20.8% · → unchanged vs prior day
 
-**Median markdown:** 20.0% · ↓ 10.0pp vs prior day
+**Median markdown:** 20.0% · → unchanged vs prior day
 
-**≥30% off:** 38 · **≥50% off:** 22
+**≥30% off:** 49 · **≥50% off:** 18
 
 ---
 
@@ -60,18 +61,18 @@ _Trailing 30-day Google search interest, normalised to ASOS = 100._
 
 | Brand | Search index |
 |---|---:|
-| **Next** | 688.0 |
-| **Zara** | 158.7 |
+| **Next** | 711.6 |
+| **Zara** | 161.8 |
 | **ASOS** | 100.0 |
-| **H&M** | 73.1 |
-| **Mango** | 62.9 |
-| **New Look** | 51.0 |
-| **River Island** | 41.8 |
+| **H&M** | 73.4 |
+| **Mango** | 62.8 |
+| **New Look** | 52.2 |
+| **River Island** | 41.5 |
 | **Boohoo** | 26.5 |
 | **M&S** | 6.4 |
-| **Karen Millen** | 5.5 |
-| **BoohooMAN** | 5.3 |
-| **PrettyLittleThing** | 0.5 |
+| **Karen Millen** | 5.3 |
+| **BoohooMAN** | 5.2 |
+| **PrettyLittleThing** | 0.3 |
 
 ---
 
@@ -83,33 +84,33 @@ _Momentum is shown only for Boohoo, PLT, BoohooMAN and Karen Millen._
 
 **Current search index:** 26.5
 
-**7-day momentum:** ↑ 4.3%
+**7-day momentum:** ↑ 2.7%
 
-**30-day momentum:** ↓ 8.9%
+**30-day momentum:** ↓ 7.7%
 
 ### PrettyLittleThing
 
-**Current search index:** 0.5
+**Current search index:** 0.3
 
-**7-day momentum:** ↑ 25.0%
+**7-day momentum:** ↓ 57.1%
 
-**30-day momentum:** ↓ 80.8%
+**30-day momentum:** ↓ 87.0%
 
 ### BoohooMAN
 
-**Current search index:** 5.3
+**Current search index:** 5.2
 
 **7-day momentum:** → 0.0%
 
-**30-day momentum:** ↓ 8.6%
+**30-day momentum:** ↓ 10.3%
 
 ### Karen Millen
 
-**Current search index:** 5.5
+**Current search index:** 5.3
 
-**7-day momentum:** ↓ 1.8%
+**7-day momentum:** ↑ 1.9%
 
-**30-day momentum:** ↓ 14.1%
+**30-day momentum:** ↓ 15.9%
 
 ---
 
