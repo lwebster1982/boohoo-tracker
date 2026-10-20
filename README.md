@@ -1,6 +1,6 @@
 # Retail Trading Monitor
 
-**19 October 2026**
+**20 October 2026**
 
 _Daily read-through on promotional intensity and UK consumer search interest._
 
@@ -8,9 +8,8 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ## 🚨 Changes Worth Noticing
 
-- **Boohoo:** markdown breadth decreased by 4.8pp.
-- **Boohoo:** median markdown deepened by 10.0pp.
-- **PrettyLittleThing:** markdown breadth decreased by 3.8pp.
+- **Boohoo:** median markdown eased by 5.0pp.
+- **PrettyLittleThing:** median markdown eased by 5.0pp.
 - **PrettyLittleThing:** 7-day search interest decreased by 57.1%.
 
 ---
@@ -19,39 +18,39 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ### Boohoo
 
-**Assortment:** 1,904 products
+**Assortment:** 1,907 products
 
-**On markdown:** 94.7% · ↓ 4.8pp vs prior day
+**On markdown:** 96.3% · ↑ 1.6pp vs prior day
 
-**Average markdown:** 31.5% · ↑ 4.9pp vs prior day
+**Average markdown:** 28.8% · ↓ 2.7pp vs prior day
 
-**Median markdown:** 25.0% · ↑ 10.0pp vs prior day
+**Median markdown:** 20.0% · ↓ 5.0pp vs prior day
 
-**≥30% off:** 582 · **≥50% off:** 445
+**≥30% off:** 656 · **≥50% off:** 499
 
 ### PrettyLittleThing
 
-**Assortment:** 8,740 products
+**Assortment:** 8,781 products
 
-**On markdown:** 94.3% · ↓ 3.8pp vs prior day
+**On markdown:** 95.6% · ↑ 1.3pp vs prior day
 
-**Average markdown:** 42.9% · ↑ 0.8pp vs prior day
+**Average markdown:** 41.8% · ↓ 1.1pp vs prior day
 
-**Median markdown:** 47.0% · ↑ 2.0pp vs prior day
+**Median markdown:** 42.0% · ↓ 5.0pp vs prior day
 
-**≥30% off:** 5,187 · **≥50% off:** 4,060
+**≥30% off:** 5,542 · **≥50% off:** 3,990
 
 ### BoohooMAN
 
-**Assortment:** 1,705 products
+**Assortment:** 1,515 products
 
-**On markdown:** 98.5% · ↓ 1.1pp vs prior day
+**On markdown:** 97.2% · ↓ 1.3pp vs prior day
 
-**Average markdown:** 20.8% · → unchanged vs prior day
+**Average markdown:** 22.8% · ↑ 2.0pp vs prior day
 
 **Median markdown:** 20.0% · → unchanged vs prior day
 
-**≥30% off:** 49 · **≥50% off:** 18
+**≥30% off:** 186 · **≥50% off:** 35
 
 ---
 
