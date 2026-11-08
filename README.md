@@ -1,6 +1,6 @@
 # Retail Trading Monitor
 
-**07 November 2026**
+**08 November 2026**
 
 _Daily read-through on promotional intensity and UK consumer search interest._
 
@@ -8,14 +8,12 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ## 🚨 Changes Worth Noticing
 
-- **Boohoo:** markdown breadth increased by 2.3pp.
-- **Boohoo:** median markdown eased by 5.0pp.
-- **BoohooMAN:** markdown breadth increased by 3.0pp.
-- **BoohooMAN:** median markdown deepened by 10.0pp.
-- **Boohoo:** 7-day search interest increased by 28.1%.
-- **PrettyLittleThing:** 7-day search interest decreased by 50.0%.
-- **BoohooMAN:** 7-day search interest increased by 29.1%.
-- **Karen Millen:** 7-day search interest increased by 29.1%.
+- **Boohoo:** median markdown deepened by 5.0pp.
+- **PrettyLittleThing:** median markdown deepened by 6.0pp.
+- **Boohoo:** 7-day search interest increased by 33.0%.
+- **PrettyLittleThing:** 7-day search interest increased by 150.0%.
+- **BoohooMAN:** 7-day search interest increased by 33.9%.
+- **Karen Millen:** 7-day search interest increased by 26.8%.
 
 ---
 
@@ -23,39 +21,39 @@ _Daily read-through on promotional intensity and UK consumer search interest._
 
 ### Boohoo
 
-**Assortment:** 729 products
+**Assortment:** 1,859 products
 
-**On markdown:** 100.0% · ↑ 2.3pp vs prior day
+**On markdown:** 98.8% · ↓ 1.2pp vs prior day
 
-**Average markdown:** 19.1% · ↓ 11.8pp vs prior day
+**Average markdown:** 34.1% · ↑ 15.0pp vs prior day
 
-**Median markdown:** 20.0% · ↓ 5.0pp vs prior day
+**Median markdown:** 25.0% · ↑ 5.0pp vs prior day
 
-**≥30% off:** 22 · **≥50% off:** 4
+**≥30% off:** 756 · **≥50% off:** 358
 
 ### PrettyLittleThing
 
-**Assortment:** 8,275 products
+**Assortment:** 8,642 products
 
-**On markdown:** 96.2% · ↓ 0.8pp vs prior day
+**On markdown:** 96.3% · ↑ 0.1pp vs prior day
 
-**Average markdown:** 42.3% · ↑ 0.7pp vs prior day
+**Average markdown:** 44.2% · ↑ 1.9pp vs prior day
 
-**Median markdown:** 44.0% · ↑ 4.0pp vs prior day
+**Median markdown:** 50.0% · ↑ 6.0pp vs prior day
 
-**≥30% off:** 5,092 · **≥50% off:** 3,864
+**≥30% off:** 5,490 · **≥50% off:** 4,237
 
 ### BoohooMAN
 
-**Assortment:** 1,634 products
+**Assortment:** 1,528 products
 
-**On markdown:** 99.9% · ↑ 3.0pp vs prior day
+**On markdown:** 99.9% · → unchanged vs prior day
 
-**Average markdown:** 45.6% · ↑ 15.6pp vs prior day
+**Average markdown:** 39.4% · ↓ 6.2pp vs prior day
 
-**Median markdown:** 40.0% · ↑ 10.0pp vs prior day
+**Median markdown:** 40.0% · → unchanged vs prior day
 
-**≥30% off:** 1,631 · **≥50% off:** 688
+**≥30% off:** 1,525 · **≥50% off:** 350
 
 ---
 
@@ -65,18 +63,18 @@ _Trailing 30-day Google search interest, normalised to ASOS = 100._
 
 | Brand | Search index |
 |---|---:|
-| **Next** | 971.5 |
-| **Zara** | 219.2 |
+| **Next** | 991.2 |
+| **Zara** | 224.3 |
+| **H&M** | 101.4 |
 | **ASOS** | 100.0 |
-| **H&M** | 100.0 |
-| **Mango** | 81.3 |
-| **New Look** | 69.6 |
-| **River Island** | 54.3 |
-| **Boohoo** | 36.5 |
-| **BoohooMAN** | 7.1 |
+| **Mango** | 83.7 |
+| **New Look** | 73.3 |
+| **River Island** | 55.4 |
+| **Boohoo** | 37.5 |
+| **BoohooMAN** | 7.5 |
+| **M&S** | 7.3 |
 | **Karen Millen** | 7.1 |
-| **M&S** | 7.0 |
-| **PrettyLittleThing** | 0.2 |
+| **PrettyLittleThing** | 0.5 |
 
 ---
 
@@ -86,35 +84,35 @@ _Momentum is shown only for Boohoo, PLT, BoohooMAN and Karen Millen._
 
 ### Boohoo
 
-**Current search index:** 36.5
+**Current search index:** 37.5
 
-**7-day momentum:** ↑ 28.1%
+**7-day momentum:** ↑ 33.0%
 
-**30-day momentum:** ↑ 20.1%
+**30-day momentum:** ↑ 19.4%
 
 ### PrettyLittleThing
 
-**Current search index:** 0.2
+**Current search index:** 0.5
 
-**7-day momentum:** ↓ 50.0%
+**7-day momentum:** ↑ 150.0%
 
-**30-day momentum:** ↓ 92.9%
+**30-day momentum:** ↓ 16.7%
 
 ### BoohooMAN
 
-**Current search index:** 7.1
+**Current search index:** 7.5
 
-**7-day momentum:** ↑ 29.1%
+**7-day momentum:** ↑ 33.9%
 
-**30-day momentum:** ↑ 16.4%
+**30-day momentum:** ↓ 10.7%
 
 ### Karen Millen
 
 **Current search index:** 7.1
 
-**7-day momentum:** ↑ 29.1%
+**7-day momentum:** ↑ 26.8%
 
-**30-day momentum:** ↑ 12.7%
+**30-day momentum:** ↓ 15.5%
 
 ---
 
